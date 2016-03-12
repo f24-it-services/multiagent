@@ -1,0 +1,53 @@
+{
+  "controller": { "id": "01", "ip": "127.0.0.1", "port": 15000 },
+  "consuls": {
+    "all-healthy": [
+      { "id": "02", "ip": "127.0.0.1", "port": 16000, "delay": 100, "status": 200 },
+      { "id": "03", "ip": "127.0.0.1", "port": 16001, "delay": 50,  "status": 200 },
+      { "id": "04", "ip": "127.0.0.1", "port": 16002, "delay": 10,  "status": 200 }
+    ],
+    "first-one-failing": [
+      { "id": "05", "ip": "127.0.0.1", "port": 16003, "delay": 10,  "status": 404 },
+      { "id": "06", "ip": "127.0.0.1", "port": 16004, "delay": 50,  "status": 200 },
+      { "id": "07", "ip": "127.0.0.1", "port": 16005, "delay": 100, "status": 200 }
+    ],
+    "first-one-failing-second-one-times-out": [
+      { "id": "08", "ip": "127.0.0.1", "port": 16006, "delay": 10,  "status": 404 },
+      { "id": "09", "ip": "127.0.0.1", "port": 16007, "delay": 600, "status": 200 },
+      { "id": "10", "ip": "127.0.0.1", "port": 16008, "delay": 100, "status": 200 }
+    ],
+    "very-lame": [
+      { "id": "11", "ip": "127.0.0.1", "port": 16009, "delay": 400, "status": 200 },
+      { "id": "12", "ip": "127.0.0.1", "port": 16010, "delay": 400, "status": 200 },
+      { "id": "13", "ip": "127.0.0.1", "port": 16011, "delay": 400, "status": 200 }
+    ],
+    "all-time-out": [
+      { "id": "14", "ip": "127.0.0.1", "port": 16012, "delay": 600, "status": 200 },
+      { "id": "15", "ip": "127.0.0.1", "port": 16013, "delay": 600, "status": 200 },
+      { "id": "16", "ip": "127.0.0.1", "port": 16014, "delay": 600, "status": 200 }
+    ]
+  },
+  "services": {
+    "all-healthy": [
+      { "id": "17", "ip": "127.0.0.1", "port": 17000, "delay": 10,  "status": 200 },
+      { "id": "18", "ip": "127.0.0.1", "port": 17001, "delay": 10,  "status": 200 },
+      { "id": "19", "ip": "127.0.0.1", "port": 17002, "delay": 10,  "status": 200 }
+    ],
+    "two-of-three-failing": [
+      { "id": "20", "ip": "127.0.0.1", "port": 17003, "delay": 10,  "status": 500 },
+      { "id": "21", "ip": "127.0.0.1", "port": 17004, "delay": 10,  "status": 500 },
+      { "id": "22", "ip": "127.0.0.1", "port": 17005, "delay": 10,  "status": 200 }
+    ],
+    "all-failing": [
+      { "id": "23", "ip": "127.0.0.1", "port": 17006, "delay": 10,  "status": 500 },
+      { "id": "24", "ip": "127.0.0.1", "port": 17007, "delay": 10,  "status": 500 },
+      { "id": "25", "ip": "127.0.0.1", "port": 17008, "delay": 10,  "status": 500 }
+    ],
+    "first-one-times-out": [
+      { "id": "26", "ip": "127.0.0.1", "port": 17009, "delay": 600, "status": 200 },
+      { "id": "27", "ip": "127.0.0.1", "port": 17010, "delay": 10,  "status": 200 },
+      { "id": "28", "ip": "127.0.0.1", "port": 17011, "delay": 10,  "status": 200 }
+    ],
+    "no-endpoint": []
+  }
+}
