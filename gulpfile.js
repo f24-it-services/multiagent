@@ -4,14 +4,16 @@ const fs              = require('fs');
 const gulp            = require('gulp');
 const karma           = require('karma');
 const rimraf          = require('rimraf');
-const browserify      = require('browserify');
 const babel           = require('gulp-babel');
 const mocha           = require('gulp-mocha');
 const eslint          = require('gulp-eslint');
 const uglify          = require('gulp-uglify');
 const rename          = require('gulp-rename');
 const runSequence     = require('run-sequence');
+const webpack         = require('webpack-stream');
+const webpackConfig   = require('./webpack.config');
 const testEnvironment = require('./test/test-environment');
+
 
 gulp.task('lint', function () {
   return gulp.src(['*.js', 'src/**/*.js', 'test/**/*.js'])
@@ -35,18 +37,13 @@ gulp.task('build:node', function () {
 });
 
 gulp.task('build:browser', function () {
-  if (!fs.existsSync('lib')) fs.mkdirSync('lib');
-  return browserify('src/index.js')
-    .transform('babelify', {
-      presets: ['es2015'],
-      plugins: ['transform-es2015-modules-umd'],
-      moduleId: 'multiagent'
-    })
-    .bundle()
-    .pipe(fs.createWriteStream('lib/browser.js'));
+  return gulp.src('src/index.js')
+    .pipe(webpack(webpackConfig))
+    .pipe(rename('browser.js'))
+    .pipe(gulp.dest('lib'));
 });
 
-gulp.task('minify', function() {
+gulp.task('minify', function () {
   return gulp.src('lib/browser.js')
     .pipe(uglify())
     .pipe(rename('browser.min.js'))
