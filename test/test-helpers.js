@@ -49,6 +49,27 @@ module.exports.createSimpleFailoverFixture = function (serviceName, countCallbac
   return fixture;
 };
 
+module.exports.createMultipleRequestFixture = function (serviceName, strategy, countCallbacksMs, done) {
+  const fixture = {};
+  fixture.services = servers.services[serviceName];
+  fixture.failover = new SimpleFailover({
+    servers: fixture.services.map(x => `http://${x.ip}:${x.port}`),
+    strategy: strategy
+  });
+  fixture.request = new Request('GET', '/endpoint', fixture.failover);
+  fixture.request.end(countCallbackCalls((err, res) => {
+    fixture.error = err;
+    fixture.response = res;
+  }, countCallbacksMs, callbackCalls => {
+    fixture.callbackCalls = callbackCalls;
+    getServiceCalls().then(serviceCalls => {
+      fixture.serviceCalls = serviceCalls;
+      done();
+    }, done);
+  }));
+  return fixture;
+};
+
 module.exports.createConsulFailoverFixture = function (clusterName, serviceName, discoveryTimeout, countCallbacksMs, done) {
   const fixture = {};
   fixture.cluster = servers.consuls[clusterName];

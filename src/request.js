@@ -1,5 +1,6 @@
 'use strict';
 
+const arrayShuffle = require('array-shuffle');
 const superagent = require('superagent');
 
 const Request = function (method, path, failOver) {
@@ -47,6 +48,8 @@ Request.prototype.end = function (cb) {
         this._executeSimultaneously(urls, cb);
       } else if (this._failOver.strategy === 'sequentially') {
         this._executeSequentially(urls, cb);
+      } else if (this._failOver.strategy === 'randomly') {
+        this._executeSequentially(arrayShuffle(urls), cb);
       } else {
         return cb && cb(new Error(`Unknown strategy '${this._failOver.strategy}'`));
       }

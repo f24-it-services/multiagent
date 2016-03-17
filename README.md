@@ -77,15 +77,15 @@ client
 
 For the client using simple failover you can pass the following additional options:
 
-* __strategy__: string, (sequentially|simultaneously), default: 'sequentially'
-* __shouldFailOver__: // function, default: `(err, res) => err || res.status >= 400`
+* __strategy__: string, (sequentially|randomly|simultaneously), default: 'sequentially'
+* __shouldFailOver__: function, default: `(err, res) => err || res.status >= 400`
 
 For the client using Consul you can pass the following additional options:
 
 * __serviceProtocol__: string, (http|https), default: 'http'
-* __serviceStrategy__: string, (sequentially|simultaneously), default: 'sequentially'
+* __serviceStrategy__: string, (sequentially|randomly|simultaneously), default: 'sequentially'
 * __discoveryTimeout__: number, in milliseconds, default: 2000
-* __discoveryStrategy__: string, (sequentially|simultaneously), default: 'simultaneously'
+* __discoveryStrategy__: string, (sequentially|randomly|simultaneously), default: 'simultaneously'
 * __refreshAfter__: number, in milliseconds, default: 60000
 * __shouldFailOver__: function, default: `(err, res) => err || res.status >= 400`
 * __createConsulRequestPath__: function, default: ``serviceName => `/v1/health/service/${encodeURIComponent(serviceName)}?passing=true` ``,
