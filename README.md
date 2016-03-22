@@ -110,6 +110,29 @@ For the client using Consul you can pass the following additional options:
 * __createConsulRequestPath__: function, default: ``serviceName => `/v1/health/service/${encodeURIComponent(serviceName)}?passing=true` ``,
 * __createServerListFromConsulResponse__: function, default: ``(body, serviceProtocol) => body.map(x => `${serviceProtocol}://${x.Service.Address}:${x.Service.Port}`)``
 
+## Finetuning failover options on a per request basis
+
+When you create a client with failover using `agent.client({ /* options */ })` you can override
+the failover strategy as well as the failover criteria on a per request basis. This is sometimes useful
+when e.g. in a RESTful environment a response with status code 404 (not found) is a perfectly valid
+result and should not lead to any failover:
+
+~~~js
+// create a client with default options for all requests issued using this client instance:
+const client = agent.client({
+  servers: ['http://sub1.abc.com', 'http://sub2.abc.com', 'http://sub3.abc.com'],
+  strategy: 'simultaneously',
+  shouldFailOver: (err, res) => err || res.status >= 400
+});
+
+// this will execute the requests sequentially and NOT failover on a 404 status response,
+// thus overriding the options 'strategy' and 'shouldFailOver' set as default on the client:
+client
+  .get('/endpoint')
+  .failOver({ strategy: 'sequentially' })
+  .failOver({ shouldFailOver: (err, res) => err || (res.status >= 400 && res.status !== 404) }) 
+~~~
+
 ## Supported API
 
 The following functions from [superagent](http://visionmedia.github.io/superagent/) are supported:
@@ -126,6 +149,7 @@ The following functions from [superagent](http://visionmedia.github.io/superagen
 Additionally:
 
 * request
+* failOver
 
 ### On the request
 

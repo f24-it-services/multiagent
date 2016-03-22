@@ -6,7 +6,7 @@ const superagent = require('superagent');
 const Request = function (method, path, failOver) {
   this.method = method;
   this.path = path;
-  this._failOver = failOver;
+  this._failOver = failOver ? Object.create(failOver) : null;
   this._actions = [];
   this._requests = [];
   this._called = false;
@@ -58,6 +58,13 @@ Request.prototype.end = function (cb) {
     this._executeSingle(this.path, cb);
   }
 
+  return this;
+};
+
+Request.prototype.failOver = function (options) {
+  if (!options || !this._failOver) return this;
+  if (options.strategy) this._failOver.strategy = options.strategy;
+  if (options.shouldFailOver) this._failOver.shouldFailOver = options.shouldFailOver;
   return this;
 };
 
