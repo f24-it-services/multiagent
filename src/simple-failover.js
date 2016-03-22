@@ -5,14 +5,14 @@ const SimpleFailover = function (options) {
 
   this.servers = options.servers;
   this.strategy = options.strategy || 'sequentially';
-  if (options.shouldFailOver) this.shouldFailOver = options.shouldFailOver;
+  if (options.shouldFailover) this.shouldFailover = options.shouldFailover;
 };
 
 SimpleFailover.prototype.resolveServers = function (cb) {
   setTimeout(() => cb(null, this.servers), 0);
 };
 
-SimpleFailover.prototype.shouldFailOver = function (err, res) {
+SimpleFailover.prototype.shouldFailover = function (err, res) {
   return err || res.status >= 400;
 };
 

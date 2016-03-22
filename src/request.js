@@ -3,10 +3,10 @@
 const arrayShuffle = require('array-shuffle');
 const superagent = require('superagent');
 
-const Request = function (method, path, failOver) {
+const Request = function (method, path, failover) {
   this.method = method;
   this.path = path;
-  this._failOver = failOver ? Object.create(failOver) : null;
+  this._failover = failover ? Object.create(failover) : null;
   this._actions = [];
   this._requests = [];
   this._called = false;
@@ -39,19 +39,19 @@ Request.prototype.end = function (cb) {
   if (this._called) throw new Error('end can be only called once');
   this._called = true;
 
-  if (this._failOver) {
-    this._failOver.resolveServers((err, addr) => {
+  if (this._failover) {
+    this._failover.resolveServers((err, addr) => {
       if (err) return cb && cb(err);
       if (!addr || ! addr.length) return cb && cb(new Error('server list is empty'));
       const urls = addr.map(server => concatPath(server, this.path));
-      if (this._failOver.strategy === 'simultaneously') {
+      if (this._failover.strategy === 'simultaneously') {
         this._executeSimultaneously(urls, cb);
-      } else if (this._failOver.strategy === 'sequentially') {
+      } else if (this._failover.strategy === 'sequentially') {
         this._executeSequentially(urls, cb);
-      } else if (this._failOver.strategy === 'randomly') {
+      } else if (this._failover.strategy === 'randomly') {
         this._executeSequentially(arrayShuffle(urls), cb);
       } else {
-        return cb && cb(new Error(`Unknown strategy '${this._failOver.strategy}'`));
+        return cb && cb(new Error(`Unknown strategy '${this._failover.strategy}'`));
       }
     });
   } else {
@@ -61,10 +61,10 @@ Request.prototype.end = function (cb) {
   return this;
 };
 
-Request.prototype.failOver = function (options) {
-  if (!options || !this._failOver) return this;
-  if (options.strategy) this._failOver.strategy = options.strategy;
-  if (options.shouldFailOver) this._failOver.shouldFailOver = options.shouldFailOver;
+Request.prototype.failover = function (options) {
+  if (!options || !this._failover) return this;
+  if (options.strategy) this._failover.strategy = options.strategy;
+  if (options.shouldFailover) this._failover.shouldFailover = options.shouldFailover;
   return this;
 };
 
@@ -114,7 +114,7 @@ Request.prototype._executeSimultaneously = function (urls, cb) {
     const req = this._executeSingle(url, (err, res) => {
       remaining -= 1;
       if (settled) return;
-      if (!this._failOver.shouldFailOver(err, res, this) || remaining === 0) {
+      if (!this._failover.shouldFailover(err, res, this) || remaining === 0) {
         settled = true;
         if (cb) cb(err, res);
         this._requests.filter(x => x !== req).forEach(x => x.abort());
@@ -126,7 +126,7 @@ Request.prototype._executeSimultaneously = function (urls, cb) {
 Request.prototype._executeSequentially = function (urls, cb) {
   const url = urls[0];
   this._executeSingle(url, (err, res) => {
-    if (!err || !this._failOver.shouldFailOver(err, res, this)) return cb && cb(err, res);
+    if (!err || !this._failover.shouldFailover(err, res, this)) return cb && cb(err, res);
     if (urls.length <= 1) return cb && cb(err || new Error('No more fail over URLs to try'));
     return this._executeSequentially(urls.slice(1), cb);
   });

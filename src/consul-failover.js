@@ -14,7 +14,7 @@ const ConsulFailover = function (options) {
   this.discoveryStrategy = options.discoveryStrategy || 'simultaneously';
   this.refreshAfter = options.refreshAfter || 60000;
   this.discoveryTimeout = options.discoveryTimeout || 10000;
-  if (options.shouldFailOver) this.shouldFailOver = options.shouldFailOver;
+  if (options.shouldFailover) this.shouldFailover = options.shouldFailover;
   if (options.createConsulRequestPath) this.createConsulRequestPath = options.createConsulRequestPath;
   if (options.createServerListFromConsulResponse) this.createServerListFromConsulResponse = options.createServerListFromConsulResponse;
 
@@ -28,7 +28,7 @@ const ConsulFailover = function (options) {
 
   // Prepare discovery:
   this._discoveryRequestPath = this.createConsulRequestPath(this.serviceName);
-  this._discoveryFailOver = new SimpleFailover({
+  this._discoveryFailover = new SimpleFailover({
     servers: this.discoveryServers,
     strategy: this.discoveryStrategy
   });
@@ -42,7 +42,7 @@ ConsulFailover.prototype.resolveServers = function (cb) {
 
   this._isDiscovering = true;
 
-  const req = new Request('GET', this._discoveryRequestPath, this._discoveryFailOver);
+  const req = new Request('GET', this._discoveryRequestPath, this._discoveryFailover);
   req.timeout(this.discoveryTimeout);
   req.end((err, res) => {
     const servers = !err ? this.createServerListFromConsulResponse(res.body, this.serviceProtocol) : [];
@@ -62,7 +62,7 @@ ConsulFailover.prototype.resolveServers = function (cb) {
   });
 };
 
-ConsulFailover.prototype.shouldFailOver = function (err, res) {
+ConsulFailover.prototype.shouldFailover = function (err, res) {
   return err || res.status >= 400;
 };
 

@@ -49,7 +49,7 @@ module.exports.createSimpleFailoverFixture = function (serviceName, countCallbac
   return fixture;
 };
 
-module.exports.createMultipleRequestFixture = function (serviceName, strategy, failOverOverrides, countCallbacksMs, done) {
+module.exports.createMultipleRequestFixture = function (serviceName, strategy, failoverOverrides, countCallbacksMs, done) {
   const fixture = {};
   fixture.services = servers.services[serviceName];
   fixture.failover = new SimpleFailover({
@@ -57,7 +57,7 @@ module.exports.createMultipleRequestFixture = function (serviceName, strategy, f
     strategy: strategy
   });
   fixture.request = new Request('GET', '/endpoint', fixture.failover);
-  if (failOverOverrides) fixture.request.failOver(failOverOverrides);
+  if (failoverOverrides) fixture.request.failover(failoverOverrides);
   fixture.request.end(countCallbackCalls((err, res) => {
     fixture.error = err;
     fixture.response = res;

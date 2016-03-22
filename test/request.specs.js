@@ -86,7 +86,7 @@ describe('Request', function () {
 
   describe('when used with multiple servers and override for failover criteria', function () {
     beforeEach(function (done) {
-      fixture = helpers.createMultipleRequestFixture('first-one-failing', 'sequentially', { shouldFailOver: () => false }, 0, done);
+      fixture = helpers.createMultipleRequestFixture('first-one-failing', 'sequentially', { shouldFailover: () => false }, 0, done);
     });
     it('should have called the first server', function () {
       expect(fixture.serviceCalls[fixture.services[0].id].length).to.be(1);
@@ -101,7 +101,7 @@ describe('Request', function () {
       expect(fixture.error.status).to.be(404);
     });
     it('should call the callback function exactly once', function (done) {
-      fixture = helpers.createMultipleRequestFixture('first-one-failing', 'sequentially', { shouldFailOver: () => false }, 500, () => {
+      fixture = helpers.createMultipleRequestFixture('first-one-failing', 'sequentially', { shouldFailover: () => false }, 500, () => {
         expect(fixture.callbackCalls).to.be(1);
         done();
       });

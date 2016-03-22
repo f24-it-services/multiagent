@@ -97,7 +97,7 @@ client
 For the client using simple failover you can pass the following additional options:
 
 * __strategy__: string, (sequentially|randomly|simultaneously), default: 'sequentially'
-* __shouldFailOver__: function, default: `(err, res) => err || res.status >= 400`
+* __shouldFailover__: function, default: `(err, res) => err || res.status >= 400`
 
 For the client using Consul you can pass the following additional options:
 
@@ -106,7 +106,7 @@ For the client using Consul you can pass the following additional options:
 * __discoveryTimeout__: number, in milliseconds, default: 2000
 * __discoveryStrategy__: string, (sequentially|randomly|simultaneously), default: 'simultaneously'
 * __refreshAfter__: number, in milliseconds, default: 60000
-* __shouldFailOver__: function, default: `(err, res) => err || res.status >= 400`
+* __shouldFailover__: function, default: `(err, res) => err || res.status >= 400`
 * __createConsulRequestPath__: function, default: ``serviceName => `/v1/health/service/${encodeURIComponent(serviceName)}?passing=true` ``,
 * __createServerListFromConsulResponse__: function, default: ``(body, serviceProtocol) => body.map(x => `${serviceProtocol}://${x.Service.Address}:${x.Service.Port}`)``
 
@@ -122,15 +122,15 @@ result and should not lead to any failover:
 const client = agent.client({
   servers: ['http://sub1.abc.com', 'http://sub2.abc.com', 'http://sub3.abc.com'],
   strategy: 'simultaneously',
-  shouldFailOver: (err, res) => err || res.status >= 400
+  shouldFailover: (err, res) => err || res.status >= 400
 });
 
 // this will execute the requests sequentially and NOT failover on a 404 status response,
-// thus overriding the options 'strategy' and 'shouldFailOver' set as default on the client:
+// thus overriding the options 'strategy' and 'shouldFailover' set as default on the client:
 client
   .get('/endpoint')
-  .failOver({ strategy: 'sequentially' })
-  .failOver({ shouldFailOver: (err, res) => err || (res.status >= 400 && res.status !== 404) }) 
+  .failover({ strategy: 'sequentially' })
+  .failover({ shouldFailover: (err, res) => err || (res.status >= 400 && res.status !== 404) }) 
 ~~~
 
 ## Supported API
@@ -149,7 +149,7 @@ The following functions from [superagent](http://visionmedia.github.io/superagen
 Additionally:
 
 * request
-* failOver
+* failover
 
 ### On the request
 
