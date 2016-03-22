@@ -1,17 +1,36 @@
 # multiagent
 
-Simple HTTP client with failover functionality
+Simple HTTP client with failover functionality for node.js and browsers
 
 It supports simple fallback addresses as well as dynamic service discovery using [Consul](https://www.consul.io/).
 
 Multiagent uses [superagent](http://visionmedia.github.io/superagent/) under the covers and exposes
 most of its API as well as an additional promise interface (if native promises are available).
 
-## Install
+All browsers with ECMAScript 5 support should work.
+
+## Installation
+
+node.js, browserify, webpack:
 
 ```sh
 npm install --save multiagent
 ```
+
+as a global script in the browser:
+
+```html
+<script src="node_modules/multiagent/lib/browser.min.js"></script>
+```
+
+from a CDN:
+
+```html
+<script src="https://npmcdn.com/multiagent/lib/browser.min.js"></script>
+```
+
+In case you load multiagent with a script reference into the browser,
+it will create the global variable `multiagent`.
 
 ## Examples
 
