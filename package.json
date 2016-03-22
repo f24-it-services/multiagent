@@ -1,6 +1,6 @@
 {
   "name": "multiagent",
-  "description": "Simple HTTP client with failover functionality",
+  "description": "Simple HTTP client with failover functionality for node.js and browsers",
   "version": "2.0.1",
   "scripts": {
     "test": "gulp test",
@@ -9,6 +9,7 @@
   "keywords": [
     "http",
     "ajax",
+    "browser",
     "request",
     "agent",
     "superagent",
