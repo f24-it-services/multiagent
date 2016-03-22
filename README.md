@@ -149,7 +149,6 @@ The following functions from [superagent](http://visionmedia.github.io/superagen
 Additionally:
 
 * request
-* failover
 
 ### On the request
 
@@ -169,6 +168,7 @@ Additionally:
 
 Additionally:
 
+* failover
 * promise
 * then
 * catch

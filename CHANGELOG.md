@@ -1,6 +1,10 @@
 # Changelog
 
-#### **v2.0.0** (2016-03-22)
+#### **v2.0.1** (2016-03-23)
+
+* Enhancement: Fix error in documentation
+
+#### **v2.0.0** (2016-03-23)
 
 * Breaking Change: Use lowercase *o* in all APIs containing the word *Failover*
 
