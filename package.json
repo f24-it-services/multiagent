@@ -6,6 +6,19 @@
     "test": "gulp test",
     "prepublish": "gulp build"
   },
+  "keywords": [
+    "http",
+    "ajax",
+    "request",
+    "agent",
+    "superagent",
+    "failover",
+    "service",
+    "microservice",
+    "discovery",
+    "consul",
+    "resilient"
+  ],
   "author": "Andreas Helmberger <public@ahelmberger.de>",
   "license": "MIT",
   "main": "lib/index.js",
