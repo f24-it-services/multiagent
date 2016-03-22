@@ -9,7 +9,7 @@ const SimpleFailover = function (options) {
 };
 
 SimpleFailover.prototype.resolveServers = function (cb) {
-  setTimeout(() => cb(null, this.servers), 100);
+  setTimeout(() => cb(null, this.servers), 0);
 };
 
 SimpleFailover.prototype.shouldFailOver = function (err, res) {
