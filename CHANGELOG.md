@@ -1,5 +1,9 @@
 # Changelog
 
+#### **v2.1.0** (2016-07-11)
+
+* Feature: Add possibility to resolve server addresses using the client
+
 #### **v2.0.1** (2016-03-23)
 
 * Enhancement: Fix error in documentation

@@ -36,6 +36,9 @@ it will create the global variable `multiagent`.
 
 ### Simple HTTP requests
 
+Multiagent can be used as a simple HTTP client, pretty much as a drop-in
+replacement of [superagent](http://visionmedia.github.io/superagent/):
+
 ```js
 const agent = require('multiagent');
 
@@ -58,6 +61,9 @@ req.then(res => console.log(res.body), err => console.log(err));
 
 ### HTTP client with failover
 
+If you have your service running on multiple endpoints, you can provide a list
+of hard-coded server URLs and take advantage of multiagent's failover mechanism:
+
 ```js
 const agent = require('multiagent');
 
@@ -75,12 +81,15 @@ client
 
 ### HTTP client with discovery using Consul
 
+Instead of hard-coding your server URLs you can use a Consul server
+or cluster to dynamically resolve the base URLs for your service calls:
+
 ```js
 const agent = require('multiagent');
 
 // create a client:
 const client = agent.client({
-  discovery: 'consul', // only possible value at the moment, could change in the future
+  discovery: 'consul', // only possible value at the moment, more could be added in the future
   discoveryServers: ['http://consul1.abc.com', 'http://consul2.abc.com', 'http://consul3.abc.com'],
   serviceName: 'my-service'
 });
@@ -90,6 +99,28 @@ client
   .get('/endpoint') // use just the path without host!
   .timeout(500) // used per individual service call!
   .end((err, res) => console.log(err || res.body));
+```
+
+### Getting the server URLs without calling an endpoint
+
+If you're just interested in the service URLs e.g. from Consul without actually calling any
+service endpoint, you can use the `resolveServers` function provided by the client instance:
+
+```js
+const agent = require('multiagent');
+
+// create a client:
+const client = agent.client({
+  discovery: 'consul',
+  discoveryServers: ['http://consul1.abc.com', 'http://consul2.abc.com', 'http://consul3.abc.com'],
+  serviceName: 'my-service'
+});
+
+// get the list of servers providing a callback:
+client.resolveServers((err, servers) => console.log(err || servers));
+
+// or use the promise interface:
+client.resolveServers().then(servers => console.log(servers));
 ```
 
 ## Advanced client options
@@ -149,6 +180,7 @@ The following functions from [superagent](http://visionmedia.github.io/superagen
 Additionally:
 
 * request
+* resolveServers
 
 ### On the request
 
