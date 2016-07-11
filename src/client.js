@@ -4,13 +4,6 @@ const Request = require('./request');
 
 const Client = function (failover) {
   this._failover = failover;
-  this.resolveServers = new Promise((resolve, reject) => failover.resolveServers((error, servers) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(servers);
-    }
-  }));
 };
 
 Client.prototype.request = function (method, path) {
@@ -34,5 +27,21 @@ Client.prototype.request = function (method, path) {
     return req;
   };
 });
+
+Client.prototype.resolveServers = function (fn) {
+  if (!this._failover) throw new Error('This client cannot resolve servers without a failover strategy');
+
+  if (!fn && Promise) {
+    return new Promise((resolve, reject) => this._failover.resolveServers((error, servers) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(servers);
+      }
+    }));
+  }
+
+  return this._failover.resolveServers(fn);
+};
 
 module.exports = Client;
