@@ -4,6 +4,13 @@ const Request = require('./request');
 
 const Client = function (failover) {
   this._failover = failover;
+  this.resolveServers = new Promise((resolve, reject) => failover.resolveServers((error, servers) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(servers);
+    }
+  }));
 };
 
 Client.prototype.request = function (method, path) {
