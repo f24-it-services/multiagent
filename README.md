@@ -26,7 +26,7 @@ as a global script in the browser:
 from a CDN:
 
 ```html
-<script src="https://npmcdn.com/multiagent/lib/browser.min.js"></script>
+<script src="https://unpkg.com/multiagent/lib/browser.min.js"></script>
 ```
 
 In case you load multiagent with a script reference into the browser,
