@@ -1,59 +1,62 @@
 {
-  "name": "multiagent",
-  "description": "Simple HTTP client with failover functionality for node.js and browsers",
+  "name": "@f24/multiagent",
   "version": "2.1.0",
-  "scripts": {
-    "test": "gulp test",
-    "prepublish": "gulp build"
-  },
+  "description": "Simple HTTP client with failover functionality for node.js and browsers",
   "keywords": [
-    "http",
+    "agent",
     "ajax",
     "browser",
-    "request",
-    "agent",
-    "superagent",
-    "failover",
-    "service",
-    "microservice",
-    "discovery",
     "consul",
-    "resilient"
+    "discovery",
+    "failover",
+    "http",
+    "microservice",
+    "request",
+    "resilient",
+    "service",
+    "superagent"
   ],
-  "author": "Andreas Helmberger <public@ahelmberger.de>",
   "license": "MIT",
+  "author": "Andreas Helmberger <public@ahelmberger.de>",
   "main": "lib/index.js",
-  "browser": "lib/browser.js",
   "repository": "ahelmberger/multiagent",
+  "scripts": {
+    "prepublish": "gulp build",
+    "test": "gulp test"
+  },
+  "browser": "lib/browser.js",
   "dependencies": {
     "array-shuffle": "^1.0.1",
-    "superagent": "^2.0.0"
+    "superagent": "^4.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.10.4",
-    "babel-eslint": "^6.1.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
     "babelify": "^7.3.0",
-    "browserify": "^13.0.1",
-    "cors": "^2.7.1",
+    "browserify": "^15.2.0",
+    "cors": "^2.8.5",
     "expect.js": "^0.3.1",
-    "express": "^4.14.0",
+    "express": "^4.16.4",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^7.0.1",
     "gulp-eslint": "^3.0.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.5.4",
+    "gulp-mocha": "^4.3.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.1",
     "karma": "^1.1.1",
     "karma-browserify": "^5.0.5",
     "karma-chrome-launcher": "^1.0.1",
     "karma-mocha": "^1.1.1",
-    "mocha": "^2.5.3",
+    "mocha": "^5.2.0",
     "rimraf": "^2.5.3",
-    "run-sequence": "^1.2.2",
+    "run-sequence": "^2.2.1",
     "watchify": "^3.7.0",
     "webpack": "^1.13.1",
     "webpack-stream": "^3.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

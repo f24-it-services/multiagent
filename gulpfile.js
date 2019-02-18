@@ -27,7 +27,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build', function (done) {
-  runSequence('clean', ['build:node', 'build:browser'], 'minify', done);
+  runSequence('clean', ['build:node', 'build:browser'], /* 'minify', */ done);
 });
 
 gulp.task('build:node', function () {
