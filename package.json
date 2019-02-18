@@ -19,7 +19,14 @@
   "license": "MIT",
   "author": "Andreas Helmberger <public@ahelmberger.de>",
   "main": "lib/index.js",
-  "repository": "ahelmberger/multiagent",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f24-it-services/multiagent"
+  },
   "scripts": {
     "prepublish": "gulp build",
     "test": "gulp test"
