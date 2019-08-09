@@ -32,7 +32,7 @@ gulp.task('build', function (done) {
 
 gulp.task('build:node', function () {
   return gulp.src('src/**/*.js')
-    .pipe(babel({ presets: ['es2015'] }))
+    .pipe(babel({ presets: ['@babel/preset-env'] }))
     .pipe(gulp.dest('lib'));
 });
 
